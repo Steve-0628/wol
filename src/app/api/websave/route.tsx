@@ -6,11 +6,10 @@ export async function POST(req: Request): Promise<NextResponse> {
   const { url, body } = await req.json();
   console.log(url);
   const parsedUrl = new URL(url);
-  console.log(parsedUrl);
   const dirPath = path.join(parsedUrl.host, parsedUrl.port, ...parsedUrl.pathname.split('/'), parsedUrl.search, parsedUrl.hash);
   console.log(dirPath);
   fs.mkdirSync(path.join('index', dirPath), { recursive: true });
-  fs.writeFileSync(path.join('index', dirPath, 'index.html'), body);
+  fs.writeFileSync(path.join('index', dirPath, `${Date.now()}.html`), body);
   return NextResponse.json({ message: 'Hello WebSave!' });
 }
 
